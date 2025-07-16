@@ -10,7 +10,6 @@ list_of_files = [
     "artifacts/",  
     "config/__init__.py",  
     "notebooks/experiments.ipynb",
-    "static/",
     "templates/",
     "utils/__init__.py",
     "requirements.txt"
@@ -20,7 +19,7 @@ list_of_files = [
 for filepath in list_of_files:
     filepath = pathlib.Path(filepath)
 
-    if filepath.suffix:
+    if filepath.suffix or filepath.name == '.gitkeep':
         filedir = filepath.parent
 
         if filedir and not filedir.exists():
@@ -31,7 +30,7 @@ for filepath in list_of_files:
             with open(filepath, "w") as f:
                 pass
             print(f"Created empty file at: {filepath} ")
-        else:
-            if not filepath.exists():
-                os.makedirs(filepath, exist_ok = True)
-                print(f"Created directory: {filepath}")
+    else:
+        if not filepath.exists():
+            os.makedirs(filepath, exist_ok = True)
+            print(f"Created directory: {filepath}")
