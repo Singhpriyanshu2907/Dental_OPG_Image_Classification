@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+##artifacts
+artifacts/raw/*
+
 # Distribution / packaging
 .Python
 build/
@@ -139,7 +142,6 @@ celerybeat.pid
 .envrc
 .venv
 env/
-artifacts/
 venv/
 ENV/
 env.bak/
