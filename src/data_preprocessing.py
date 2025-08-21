@@ -1,6 +1,6 @@
 from src.logger import auto_logger
 from src.custom_exception import CustomException
-from torch.utils.data import DataLoader,Dataset
+from torch.utils.data import Dataset
 import torchvision.transforms as transforms
 import os
 from PIL import Image
@@ -172,14 +172,12 @@ class DentalDataset(Dataset):
 
     def _load_images(self):
         try:
-            logger.info("Loading images")
             images = []
             for cls in self.classes:
                 cls_path = os.path.join(self.root_dir, cls)
                 for img_name in os.listdir(cls_path):
                     img_path = os.path.join(cls_path, img_name)
                     images.append((img_path, self.class_to_idx[cls]))
-            logger.info("Images loaded succesfully")
             return images
 
         except Exception as e:
@@ -194,14 +192,13 @@ class DentalDataset(Dataset):
                 
             img_path, label = self.images[idx]
 
-            logger.info("Applying pre-processing on image")
             image = self.preprocessor(img_path)
-            logger.info("Pre-processing applied succesfully")
 
-            logger.info("Applying Image transformation and augmentation")
+
+
             if self.transform:
                 image = self.transform(image)
-            logger.info("Image Augmentation and tranformation applied succesfully")
+
 
             return image, label
         
