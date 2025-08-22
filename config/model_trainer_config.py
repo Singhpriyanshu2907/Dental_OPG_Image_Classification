@@ -17,6 +17,8 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Model
 NUM_CLASSES = 6
 
+CLASS_LABELS = ["Caries", "BDC-BDR", "Infection", "Impacted teeth", "Healthy Teeth", "Fractured Teeth"]
+
 # Model Saving path
 WARMUP_MODEL_PATH = "artifacts/models/warmup_models"
 FINETUNE_MODEL_PATH = "artifacts/models/finetune_models"
