@@ -13,8 +13,13 @@ build/
 develop-eggs/
 dist/
 downloads/
-artifacts/raw/*
+# Ignore the entire 'raw' directory inside artifacts/
+artifacts/raw/
+
+# Ignore the entire 'processed' directory inside artifacts/
 artifacts/processed/
+
+# Ignore the entire 'models' directory inside artifacts/
 artifacts/models/
 eggs/
 .eggs/
