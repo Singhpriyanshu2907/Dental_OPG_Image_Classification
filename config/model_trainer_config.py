@@ -21,3 +21,5 @@ NUM_CLASSES = 6
 WARMUP_MODEL_PATH = "artifacts/models/warmup_models"
 FINETUNE_MODEL_PATH = "artifacts/models/finetune_models"
 OVERALL_BEST_MODEL_PATH = "artifacts/models/overallbest_model"
+
+TENSORBOARD_LOG_PATH = "runs"

@@ -1,6 +1,7 @@
 from src.logger import auto_logger
 from src.custom_exception import CustomException
 from sklearn.metrics import classification_report
+from torch.utils.tensorboard import SummaryWriter
 from src.data_preprocessing import *
 from config.model_trainer_config import *
 import torch.optim as optim
@@ -195,6 +196,10 @@ class ComparativeTrainer:
             best_val_acc = 0.0
             history = {"train_loss": [], "val_acc": []}
 
+            log_path = os.path.join(TENSORBOARD_LOG_PATH, f"{name}_warmup")
+            writer = SummaryWriter(log_path)
+
+
             print(f"Starting Warm-up Training for {name} for {num_epochs} epochs...")
             logger.info(f"Starting Warm-up Training for {name} for {num_epochs} epochs...")
 
@@ -204,6 +209,10 @@ class ComparativeTrainer:
                 history["train_loss"].append(train_loss)
                 history["val_acc"].append(val_acc)
 
+                # Log metrics to TensorBoard
+                writer.add_scalar('Loss/train_warmup', train_loss, epoch)
+                writer.add_scalar('Accuracy/val_warmup', val_acc, epoch)
+
                 print(f"Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f} | Val Acc: {val_acc:.4f}")
                 logger.info(f"Epoch {epoch+1}/{num_epochs} | Train Loss: {train_loss:.4f} | Val Acc: {val_acc:.4f}")
 
@@ -212,6 +221,8 @@ class ComparativeTrainer:
                     best_val_acc = val_acc
                     torch.save(model.state_dict(), os.path.join(WARMUP_MODEL_PATH, f"best_{name}_warmup.pth"))
                     logger.info(f"New best validation accuracy found. Saved best_warmup model.")
+            
+            writer.close()
 
             return history
         
@@ -273,12 +284,18 @@ class ComparativeTrainer:
                 torch.save(model.state_dict(), finetune_path)
                 logger.info(f"Initial fine-tune model state saved to {finetune_path}")
 
+                log_path = os.path.join(TENSORBOARD_LOG_PATH, f"{model_name}_finetune")
+                writer = SummaryWriter(log_path)
+
 
             for epoch in range(fine_tune_epochs):
                 train_loss = self._train_step(model, optimizer, criterion, scheduler, self.train_loader)
                 val_acc = self.evaluate(model, self.val_loader)
                 history["train_loss"].append(train_loss)
                 history["val_acc"].append(val_acc)
+
+                writer.add_scalar('Loss/train_finetune', train_loss, epoch)
+                writer.add_scalar('Accuracy/val_finetune', val_acc, epoch)
 
                 print(f"Fine-tune Epoch  {epoch+1}/{fine_tune_epochs} | Train Loss: {train_loss:.4f} | Val Acc: {val_acc:.4f}")
                 logger.info(f"Fine-tune Epoch {epoch+1}/{fine_tune_epochs} | Train Loss: {train_loss:.4f} | Val Acc: {val_acc:.4f}")
@@ -296,6 +313,9 @@ class ComparativeTrainer:
             test_metrics = self.test_model(model, name=f"{model_name}_finetune")
             self.results[model_name] = {"history": history, "test_metrics": test_metrics}
             logger.info(f"Testing complete for {model_name}. Accuracy: {test_metrics['accuracy']:.4f}")
+
+
+            writer.close()
         
         except Exception as e:
             logger.error(f"Failed to train and finetune model {e}")

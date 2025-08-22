@@ -1,0 +1,13 @@
+stages:
+  full_pipeline:
+    cmd: python main.py
+    deps:
+      - main.py
+      - src
+      - config
+    outs:
+      - artifacts/raw
+      - artifacts/processed
+      - artifacts/models/finetune_models
+      - artifacts/models/warmup_models
+      - artifacts/models/overallbest_model

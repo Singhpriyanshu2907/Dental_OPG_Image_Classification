@@ -11,17 +11,17 @@ logger = auto_logger(__name__)
 
 def main():
     try:
-        # logger.info("Starting data ingestion process")
-        # data = DataIngestion(data_name, data_dir,data_path)
-        # # data.run_data_ingestion()
-        # logger.info("Data ingestion process succesfully excecuted")
+        logger.info("Starting data ingestion process")
+        data = DataIngestion(data_name, data_dir,data_path)
+        data.run_data_ingestion()
+        logger.info("Data ingestion process succesfully excecuted")
 
 
 
-        # logger.info("Starting data Splitting process")
-        # data = DataSplitter(category, source, destination)
-        # data.Run_DataSplitter()
-        # logger.info("Data Splitting process succesfully excecuted, Splitted data into Train, Test and Val Set")
+        logger.info("Starting data Splitting process")
+        data = DataSplitter(category, source, destination)
+        data.Run_DataSplitter()
+        logger.info("Data Splitting process succesfully excecuted, Splitted data into Train, Test and Val Set")
 
         models_to_compare = [
         "resnet18"]
