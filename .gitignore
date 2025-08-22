@@ -14,8 +14,8 @@ develop-eggs/
 dist/
 downloads/
 artifacts/raw/*
-artifacts/processed/*
-artifacts/models/*
+artifacts/processed/
+artifacts/models/
 eggs/
 .eggs/
 lib/
