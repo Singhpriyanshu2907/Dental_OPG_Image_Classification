@@ -1,2 +1,6 @@
 [core]
     no_scm = True
+    remote = myremote
+['remote "myremote"']
+    url = gs://opg_image_bucket/
+    credentialpath = C:\Users\priya\OneDrive\Desktop\dentalopgimageclassification-dbbbadd58392.json

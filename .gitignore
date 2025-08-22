@@ -13,6 +13,10 @@ build/
 develop-eggs/
 dist/
 downloads/
+
+# DVC
+/.dvc/config
+
 # Ignore the entire 'raw' directory inside artifacts/
 artifacts/raw/
 

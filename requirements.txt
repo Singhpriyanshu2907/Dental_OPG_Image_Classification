@@ -8,6 +8,7 @@ opencv-python-headless==4.9.0.80
 torchvision==0.16.2
 tensorboard==2.15.1
 dvc==3.45
+dvc-gs
 fastapi[all]==0.109.1
 uvicorn==0.27.0
 Pillow==10.1.0
